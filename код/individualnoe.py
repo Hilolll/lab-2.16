@@ -7,14 +7,16 @@
 # работы.
 # Вариант 15
 import json
+from datetime import datetime
+
 
 def add_person_to_list(people_list):
     person = {}
     person["фамилия"] = input("Фамилия: ")
     person["имя"] = input("Имя: ")
     person["знак Зодиака"] = input("Знак Зодиака: ")
-    birthday = list(map(int, input("Дата рождения (через пробел дд мм гггг): ").split()))
-    person["дата рождения"] = birthday
+    birthday = datetime.strptime(input("Дата рождения (дд/мм/гггг): "), '%d/%m/%Y')
+    person["дата рождения"] = [int(part) for part in birthday.strftime('%d %m %Y').split()]
     people_list.append(person)
     people_list.sort(key=lambda x: tuple(x["дата рождения"]))
     print("Данные добавлены и упорядочены по датам рождения.")
@@ -43,7 +45,7 @@ def load_from_json(filename):
     return people_list
 
 
-if __name__ == "__main__":
+if __name__ == "main":
     people_data = []
 
     while True:
@@ -63,4 +65,5 @@ if __name__ == "__main__":
             break
         else:
             print("Неизвестная команда.")
+
 
